@@ -529,7 +529,7 @@ function SettingsForm({
           cardLink: form.cardLink,
           whatsapp: form.whatsapp,
           paymentDays: Number(form.paymentDays),
-          newPassword: form.newPassword || undefined,
+          ...(form.newPassword ? { newPassword: form.newPassword } : {}),
         },
       }),
     onSuccess: (data) => {
