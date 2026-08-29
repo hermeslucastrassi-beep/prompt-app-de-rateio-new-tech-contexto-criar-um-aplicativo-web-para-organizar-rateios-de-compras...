@@ -181,7 +181,14 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { db, requireAdmin, hashSecret, loadAdminData } = await import("./rateio.server");
     await requireAdmin();
-    const patch: Record<string, unknown> = {
+    const patch: {
+      pix_key: string;
+      card_link: string;
+      whatsapp: string;
+      payment_days: number;
+      updated_at: string;
+      admin_password_hash?: string;
+    } = {
       pix_key: data.pixKey.trim().slice(0, 255),
       card_link: data.cardLink.trim().slice(0, 500),
       whatsapp: data.whatsapp.replace(/[^\d+]/g, "").slice(0, 20),
@@ -191,7 +198,7 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
     const newPassword = data.newPassword?.trim();
     if (newPassword) {
       if (newPassword.length < 6) throw new Error("A nova senha deve ter ao menos 6 caracteres.");
-      patch["admin_password_hash"] = hashSecret(newPassword);
+      patch.admin_password_hash = hashSecret(newPassword);
     }
     const { error } = await db.from("settings").update(patch).eq("id", 1);
     if (error) throw new Error(error.message);
