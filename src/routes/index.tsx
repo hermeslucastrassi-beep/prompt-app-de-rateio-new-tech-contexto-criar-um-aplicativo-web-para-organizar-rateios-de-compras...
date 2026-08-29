@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  component: PublicPage;
+  component: PublicPage,
 });
 
 const PROFILE_KEY = "newtech.profile";
