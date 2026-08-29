@@ -14,7 +14,107 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      products: {
+        Row: {
+          closed_batches: number
+          created_at: string
+          id: string
+          name: string
+          total_value: number
+          units_per_batch: number
+        }
+        Insert: {
+          closed_batches?: number
+          created_at?: string
+          id?: string
+          name: string
+          total_value?: number
+          units_per_batch?: number
+        }
+        Update: {
+          closed_batches?: number
+          created_at?: string
+          id?: string
+          name?: string
+          total_value?: number
+          units_per_batch?: number
+        }
+        Relationships: []
+      }
+      settings: {
+        Row: {
+          admin_password_hash: string
+          card_link: string
+          id: number
+          payment_days: number
+          pix_key: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          admin_password_hash?: string
+          card_link?: string
+          id?: number
+          payment_days?: number
+          pix_key?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          admin_password_hash?: string
+          card_link?: string
+          id?: number
+          payment_days?: number
+          pix_key?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
+      signups: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string
+          pin_hash: string
+          product_id: string
+          quantity: number
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone: string
+          pin_hash: string
+          product_id: string
+          quantity?: number
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string
+          pin_hash?: string
+          product_id?: string
+          quantity?: number
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "signups_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
