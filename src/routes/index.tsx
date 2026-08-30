@@ -51,10 +51,6 @@ export const Route = createFileRoute("/")({
   component: PublicPage,
 });
 
-const PROFILE_KEY = "newtech.profile";
-
-type Profile = { name: string; email: string; phone: string };
-
 function usePublicData() {
   const fetcher = useServerFn(getPublicData);
   return useQuery({ queryKey: ["public-data"], queryFn: () => fetcher() });
@@ -62,6 +58,7 @@ function usePublicData() {
 
 function PublicPage() {
   const { data, isPending, error } = usePublicData();
+  const { count } = useCart();
 
   return (
     <main className="min-h-screen bg-background">
@@ -74,11 +71,21 @@ function PublicPage() {
               </p>
               <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Rateio de compras</h1>
             </div>
-            <Button asChild variant="outline" size="sm">
-              <Link to="/admin">
-                <Lock className="size-4" /> Admin
-              </Link>
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button asChild size="sm">
+                <Link to="/carrinho">
+                  <ShoppingCart className="size-4" /> Carrinho
+                  {count > 0 && (
+                    <Badge className="ml-1 bg-primary-foreground text-primary">{count}</Badge>
+                  )}
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <Link to="/admin">
+                  <Lock className="size-4" /> Admin
+                </Link>
+              </Button>
+            </div>
           </div>
           <p className="max-w-2xl text-sm text-muted-foreground">
             Os produtos são comprados em lotes fechados de viais. Escolha quantos viais você quer,
