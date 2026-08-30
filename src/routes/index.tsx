@@ -1,12 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
-import { Copy, CreditCard, Loader2, Lock, Plus, ShieldCheck, Trash2 } from "lucide-react";
+import {
+  Copy,
+  CreditCard,
+  Loader2,
+  Lock,
+  ShieldCheck,
+  ShoppingCart,
+  Trash2,
+} from "lucide-react";
 
-import { createSignup, deleteOwnSignup, getPublicData } from "@/lib/rateio.functions";
+import { deleteOwnSignup, getPublicData } from "@/lib/rateio.functions";
 import { allocateBatches, brl, perVial, prettyPhone, whatsappHref } from "@/lib/format";
+import { useCart } from "@/lib/cart";
 import { VialTray } from "@/components/rateio/VialTray";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -42,10 +51,6 @@ export const Route = createFileRoute("/")({
   component: PublicPage,
 });
 
-const PROFILE_KEY = "newtech.profile";
-
-type Profile = { name: string; email: string; phone: string };
-
 function usePublicData() {
   const fetcher = useServerFn(getPublicData);
   return useQuery({ queryKey: ["public-data"], queryFn: () => fetcher() });
@@ -53,6 +58,7 @@ function usePublicData() {
 
 function PublicPage() {
   const { data, isPending, error } = usePublicData();
+  const { count } = useCart();
 
   return (
     <main className="min-h-screen bg-background">
@@ -65,11 +71,21 @@ function PublicPage() {
               </p>
               <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Rateio de compras</h1>
             </div>
-            <Button asChild variant="outline" size="sm">
-              <Link to="/admin">
-                <Lock className="size-4" /> Admin
-              </Link>
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button asChild size="sm">
+                <Link to="/carrinho">
+                  <ShoppingCart className="size-4" /> Carrinho
+                  {count > 0 && (
+                    <Badge className="ml-1 bg-primary-foreground text-primary">{count}</Badge>
+                  )}
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <Link to="/admin">
+                  <Lock className="size-4" /> Admin
+                </Link>
+              </Button>
+            </div>
           </div>
           <p className="max-w-2xl text-sm text-muted-foreground">
             Os produtos são comprados em lotes fechados de viais. Escolha quantos viais você quer,
@@ -217,7 +233,7 @@ function ProductCard({ product, settings }: { product: PublicProduct; settings: 
           </div>
         </div>
 
-        <SignupDialog product={product} unitPrice={unitPrice} settings={settings} />
+        <AddToCart product={product} unitPrice={unitPrice} settings={settings} />
       </CardHeader>
 
       <CardContent className="space-y-2">
@@ -256,7 +272,7 @@ function ProductCard({ product, settings }: { product: PublicProduct; settings: 
   );
 }
 
-function SignupDialog({
+function AddToCart({
   product,
   unitPrice,
   settings,
@@ -265,141 +281,37 @@ function SignupDialog({
   unitPrice: number;
   settings: Settings;
 }) {
-  const [open, setOpen] = useState(false);
-  const [profile, setProfile] = useState<Profile>({ name: "", email: "", phone: "" });
   const [quantity, setQuantity] = useState(1);
-  const [pin, setPin] = useState("");
-  const queryClient = useQueryClient();
-  const submit = useServerFn(createSignup);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(PROFILE_KEY);
-      if (raw) setProfile(JSON.parse(raw) as Profile);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  const mutation = useMutation({
-    mutationFn: () =>
-      submit({
-        data: {
-          productId: product.id,
-          name: profile.name,
-          email: profile.email,
-          phone: profile.phone,
-          quantity,
-          pin,
-        },
-      }),
-    onSuccess: (data) => {
-      queryClient.setQueryData(["public-data"], data);
-      localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-      setPin("");
-      setQuantity(1);
-      setOpen(false);
-      toast.success("Inscrição registrada! Faça o pagamento e envie o comprovante.");
-    },
-    onError: (err: Error) => toast.error(err.message),
-  });
+  const { addItem } = useCart();
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full sm:w-auto">
-          <Plus className="size-4" /> Inscrever-se
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Inscrição — {product.name}</DialogTitle>
-          <DialogDescription>
-            Seu nome, telefone e quantidade ficam visíveis na lista. O e-mail é usado apenas para
-            contato interno.
-          </DialogDescription>
-        </DialogHeader>
-
-        <form
-          className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            mutation.mutate();
-          }}
-        >
-          <div className="space-y-2">
-            <Label htmlFor="name">Nome</Label>
-            <Input
-              id="name"
-              value={profile.name}
-              maxLength={80}
-              onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">E-mail (não aparece na lista)</Label>
-            <Input
-              id="email"
-              type="email"
-              value={profile.email}
-              maxLength={255}
-              onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="phone">WhatsApp com DDD</Label>
-            <Input
-              id="phone"
-              inputMode="tel"
-              value={profile.phone}
-              maxLength={20}
-              onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="quantity">Quantidade de viais</Label>
-            <Input
-              id="quantity"
-              type="number"
-              min={1}
-              max={50}
-              value={quantity}
-              onChange={(e) => setQuantity(Number(e.target.value))}
-              required
-            />
-            <p className="text-sm text-muted-foreground">
-              Total a pagar: <span className="text-primary">{brl(unitPrice * quantity)}</span> ·
-              prazo de {settings.payment_days} dias
-            </p>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="pin">Seu PIN (4 dígitos)</Label>
-            <Input
-              id="pin"
-              inputMode="numeric"
-              pattern="\d{4}"
-              maxLength={4}
-              value={pin}
-              onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
-              required
-            />
-            <p className="text-xs text-muted-foreground">
-              Guarde o PIN: ele é necessário para você excluir sua própria inscrição.
-            </p>
-          </div>
-
-          <DialogFooter>
-            <Button type="submit" disabled={mutation.isPending}>
-              {mutation.isPending && <Loader2 className="size-4 animate-spin" />}
-              Confirmar inscrição
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <div className="flex flex-wrap items-end gap-3">
+      <div className="space-y-2">
+        <Label htmlFor={`qty-${product.id}`}>Viais</Label>
+        <Input
+          id={`qty-${product.id}`}
+          type="number"
+          min={1}
+          max={50}
+          className="w-24"
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+        />
+      </div>
+      <Button
+        className="flex-1 sm:flex-none"
+        onClick={() => {
+          addItem({ productId: product.id, name: product.name, quantity });
+          toast.success(`${quantity} vial(is) de ${product.name} no carrinho.`);
+        }}
+      >
+        <ShoppingCart className="size-4" /> Adicionar ao carrinho
+      </Button>
+      <p className="w-full text-sm text-muted-foreground sm:w-auto">
+        Subtotal: <span className="text-primary">{brl(unitPrice * quantity)}</span> · prazo de{" "}
+        {settings.payment_days} dias
+      </p>
+    </div>
   );
 }
 

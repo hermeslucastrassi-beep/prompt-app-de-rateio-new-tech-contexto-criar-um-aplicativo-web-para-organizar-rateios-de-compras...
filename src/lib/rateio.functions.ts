@@ -49,6 +49,62 @@ export const createSignup = createServerFn({ method: "POST" })
     return loadPublicData();
   });
 
+export const createCartSignups = createServerFn({ method: "POST" })
+  .inputValidator(
+    (data: {
+      items: { productId: string; quantity: number }[];
+      name: string;
+      email: string;
+      phone: string;
+      pin: string;
+    }) => data,
+  )
+  .handler(async ({ data }) => {
+    const { db, hashSecret, loadPublicData } = await import("./rateio.server");
+    const name = data.name.trim().slice(0, 80);
+    const email = data.email.trim().toLowerCase().slice(0, 255);
+    const phone = data.phone.replace(/[^\d+]/g, "").slice(0, 20);
+    const pin = data.pin.trim();
+
+    if (name.length < 2) throw new Error("Informe seu nome completo.");
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("E-mail inválido.");
+    if (phone.length < 10) throw new Error("Telefone inválido (inclua o DDD).");
+    if (!/^\d{4}$/.test(pin)) throw new Error("O PIN deve ter exatamente 4 dígitos.");
+    if (!Array.isArray(data.items) || data.items.length === 0)
+      throw new Error("Seu carrinho está vazio.");
+
+    const items = data.items.map((i) => ({
+      productId: String(i.productId),
+      quantity: Math.max(1, Math.min(50, Math.floor(Number(i.quantity) || 1))),
+    }));
+
+    const { data: products, error: pe } = await db
+      .from("products")
+      .select("id")
+      .in(
+        "id",
+        items.map((i) => i.productId),
+      );
+    if (pe) throw new Error(pe.message);
+    const valid = new Set((products ?? []).map((p) => p.id));
+    const rows = items.filter((i) => valid.has(i.productId));
+    if (rows.length === 0) throw new Error("Nenhum produto válido no carrinho.");
+
+    const pinHash = hashSecret(pin);
+    const { error } = await db.from("signups").insert(
+      rows.map((i) => ({
+        product_id: i.productId,
+        name,
+        email,
+        phone,
+        quantity: i.quantity,
+        pin_hash: pinHash,
+      })),
+    );
+    if (error) throw new Error(error.message);
+    return loadPublicData();
+  });
+
 export const deleteOwnSignup = createServerFn({ method: "POST" })
   .inputValidator((data: { signupId: string; pin: string }) => data)
   .handler(async ({ data }) => {
