@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      payment_settings: {
+        Row: {
+          active_provider: string
+          configured_at: string | null
+          created_at: string
+          environment: string
+          id: number
+          integration_status: string
+          last_test_message: string
+          last_tested_at: string | null
+          public_account_id: string
+          updated_at: string
+        }
+        Insert: {
+          active_provider?: string
+          configured_at?: string | null
+          created_at?: string
+          environment?: string
+          id?: number
+          integration_status?: string
+          last_test_message?: string
+          last_tested_at?: string | null
+          public_account_id?: string
+          updated_at?: string
+        }
+        Update: {
+          active_provider?: string
+          configured_at?: string | null
+          created_at?: string
+          environment?: string
+          id?: number
+          integration_status?: string
+          last_test_message?: string
+          last_tested_at?: string | null
+          public_account_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           closed_batches: number
