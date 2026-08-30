@@ -3,10 +3,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Copy, CreditCard, Loader2, Lock, Plus, ShieldCheck, Trash2 } from "lucide-react";
+import {
+  Copy,
+  CreditCard,
+  Loader2,
+  Lock,
+  ShieldCheck,
+  ShoppingCart,
+  Trash2,
+} from "lucide-react";
 
-import { createSignup, deleteOwnSignup, getPublicData } from "@/lib/rateio.functions";
+import { deleteOwnSignup, getPublicData } from "@/lib/rateio.functions";
 import { allocateBatches, brl, perVial, prettyPhone, whatsappHref } from "@/lib/format";
+import { useCart } from "@/lib/cart";
 import { VialTray } from "@/components/rateio/VialTray";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -217,7 +226,7 @@ function ProductCard({ product, settings }: { product: PublicProduct; settings: 
           </div>
         </div>
 
-        <SignupDialog product={product} unitPrice={unitPrice} settings={settings} />
+        <AddToCart product={product} unitPrice={unitPrice} settings={settings} />
       </CardHeader>
 
       <CardContent className="space-y-2">
