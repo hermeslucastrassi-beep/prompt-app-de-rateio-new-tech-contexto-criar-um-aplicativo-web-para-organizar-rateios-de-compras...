@@ -260,3 +260,48 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return loadAdminData();
   });
+
+/* ---------- Pagamentos: configuração do proprietário ---------- */
+
+export const adminGetPaymentSettings = createServerFn({ method: "GET" }).handler(async () => {
+  const { requireAdmin } = await import("./rateio.server");
+  await requireAdmin();
+  const { loadPaymentSettingsView } = await import("./payments/gateway.server");
+  return loadPaymentSettingsView();
+});
+
+export const adminSavePaymentSettings = createServerFn({ method: "POST" })
+  .inputValidator(
+    (data: {
+      provider: string;
+      environment: string;
+      publicAccountId: string;
+      credential?: string;
+      webhookSecret?: string;
+      clearCredential?: boolean;
+    }) => data,
+  )
+  .handler(async ({ data }) => {
+    const { requireAdmin } = await import("./rateio.server");
+    await requireAdmin();
+    const { PAYMENT_PROVIDERS } = await import("./payments/providers");
+    const { savePaymentSettings } = await import("./payments/gateway.server");
+    const provider = PAYMENT_PROVIDERS.find((p) => p.id === data.provider)?.id;
+    if (!provider) throw new Error("Plataforma de pagamento inválida.");
+    const environment = data.environment === "live" ? "live" : "sandbox";
+    return savePaymentSettings({
+      provider,
+      environment,
+      publicAccountId: data.publicAccountId ?? "",
+      ...(data.credential ? { credential: data.credential } : {}),
+      ...(data.webhookSecret ? { webhookSecret: data.webhookSecret } : {}),
+      ...(data.clearCredential ? { clearCredential: true } : {}),
+    });
+  });
+
+export const adminTestPaymentConnection = createServerFn({ method: "POST" }).handler(async () => {
+  const { requireAdmin } = await import("./rateio.server");
+  await requireAdmin();
+  const { testPaymentConnection } = await import("./payments/gateway.server");
+  return testPaymentConnection();
+});

@@ -24,6 +24,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import { PaymentSettingsPanel } from "@/components/rateio/PaymentSettingsPanel";
+
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -146,9 +148,11 @@ function AdminPage() {
             <ProductList products={payload.products} onUpdate={update} />
           </TabsContent>
 
-          <TabsContent value="config" className="mt-6">
+          <TabsContent value="config" className="mt-6 space-y-5">
             <SettingsForm settings={payload.settings} onUpdate={update} />
+            <PaymentSettingsPanel />
           </TabsContent>
+
         </Tabs>
       </div>
     </main>
