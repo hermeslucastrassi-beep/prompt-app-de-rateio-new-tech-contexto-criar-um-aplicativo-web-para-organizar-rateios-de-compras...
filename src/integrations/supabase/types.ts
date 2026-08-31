@@ -19,6 +19,9 @@ export type Database = {
           active_provider: string
           configured_at: string | null
           created_at: string
+          credential_ciphertext: string
+          credential_configured_at: string | null
+          credential_last4: string
           environment: string
           id: number
           integration_status: string
@@ -26,11 +29,15 @@ export type Database = {
           last_tested_at: string | null
           public_account_id: string
           updated_at: string
+          webhook_secret_ciphertext: string
         }
         Insert: {
           active_provider?: string
           configured_at?: string | null
           created_at?: string
+          credential_ciphertext?: string
+          credential_configured_at?: string | null
+          credential_last4?: string
           environment?: string
           id?: number
           integration_status?: string
@@ -38,11 +45,15 @@ export type Database = {
           last_tested_at?: string | null
           public_account_id?: string
           updated_at?: string
+          webhook_secret_ciphertext?: string
         }
         Update: {
           active_provider?: string
           configured_at?: string | null
           created_at?: string
+          credential_ciphertext?: string
+          credential_configured_at?: string | null
+          credential_last4?: string
           environment?: string
           id?: number
           integration_status?: string
@@ -50,6 +61,7 @@ export type Database = {
           last_tested_at?: string | null
           public_account_id?: string
           updated_at?: string
+          webhook_secret_ciphertext?: string
         }
         Relationships: []
       }
