@@ -124,10 +124,14 @@ function AdminPage() {
             <TabsTrigger value="produtos" className="flex-1">
               Produtos
             </TabsTrigger>
+            <TabsTrigger value="loja" className="flex-1">
+              Loja
+            </TabsTrigger>
             <TabsTrigger value="config" className="flex-1">
               Configurações
             </TabsTrigger>
           </TabsList>
+
 
           <TabsContent value="resumo" className="mt-6 space-y-5">
             {payload.products.length === 0 && (
