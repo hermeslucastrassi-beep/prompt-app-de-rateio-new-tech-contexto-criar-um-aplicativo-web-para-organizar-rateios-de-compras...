@@ -107,7 +107,7 @@ function AdminPage() {
           <div className="flex gap-2">
             <Button asChild variant="outline" size="sm">
               <Link to="/">
-                <ArrowLeft className="size-4" /> Lista
+                <ArrowLeft className="size-4" /> Início
               </Link>
             </Button>
             <LogoutButton />
@@ -206,7 +206,7 @@ function LoginScreen() {
             </Button>
           </form>
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            <Link to="/" className="underline">
+            <Link to="/rateio" className="underline">
               Voltar para a lista pública
             </Link>
           </p>
