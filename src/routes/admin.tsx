@@ -107,7 +107,7 @@ function AdminPage() {
           <div className="flex gap-2">
             <Button asChild variant="outline" size="sm">
               <Link to="/">
-                <ArrowLeft className="size-4" /> Lista
+                <ArrowLeft className="size-4" /> Início
               </Link>
             </Button>
             <LogoutButton />
@@ -124,10 +124,14 @@ function AdminPage() {
             <TabsTrigger value="produtos" className="flex-1">
               Produtos
             </TabsTrigger>
+            <TabsTrigger value="loja" className="flex-1">
+              Loja
+            </TabsTrigger>
             <TabsTrigger value="config" className="flex-1">
               Configurações
             </TabsTrigger>
           </TabsList>
+
 
           <TabsContent value="resumo" className="mt-6 space-y-5">
             {payload.products.length === 0 && (
@@ -147,6 +151,11 @@ function AdminPage() {
             <ProductForm onUpdate={update} />
             <ProductList products={payload.products} onUpdate={update} />
           </TabsContent>
+
+          <TabsContent value="loja" className="mt-6">
+            <StoreAdminPanel />
+          </TabsContent>
+
 
           <TabsContent value="config" className="mt-6 space-y-5">
             <SettingsForm settings={payload.settings} onUpdate={update} />
@@ -206,7 +215,7 @@ function LoginScreen() {
             </Button>
           </form>
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            <Link to="/" className="underline">
+            <Link to="/rateio" className="underline">
               Voltar para a lista pública
             </Link>
           </p>

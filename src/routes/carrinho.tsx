@@ -84,7 +84,7 @@ function CartPage() {
       clear();
       setPin("");
       toast.success("Inscrições registradas! Faça o pagamento total e envie o comprovante.");
-      navigate({ to: "/" });
+      navigate({ to: "/rateio" });
     },
     onError: (err: Error) => toast.error(err.message),
   });
@@ -112,7 +112,7 @@ function CartPage() {
             <h1 className="mt-2 text-2xl font-bold sm:text-3xl">Seu carrinho</h1>
           </div>
           <Button asChild variant="outline" size="sm">
-            <Link to="/">
+            <Link to="/rateio">
               <ArrowLeft className="size-4" /> Produtos
             </Link>
           </Button>
@@ -131,7 +131,7 @@ function CartPage() {
             <CardContent className="space-y-4 py-10 text-center">
               <p className="text-sm text-muted-foreground">Seu carrinho está vazio.</p>
               <Button asChild>
-                <Link to="/">Ver produtos</Link>
+                <Link to="/rateio">Ver produtos</Link>
               </Button>
             </CardContent>
           </Card>
