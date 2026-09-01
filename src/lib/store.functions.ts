@@ -79,9 +79,9 @@ export const adminUpdateStoreProduct = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { db, requireAdmin } = await import("./rateio.server");
     await requireAdmin();
-    const patch: Record<string, unknown> = {};
-    if (typeof data.stock === "number") patch["stock"] = Math.max(0, Math.floor(data.stock));
-    if (typeof data.active === "boolean") patch["active"] = data.active;
+    const patch: { stock?: number; active?: boolean } = {};
+    if (typeof data.stock === "number") patch.stock = Math.max(0, Math.floor(data.stock));
+    if (typeof data.active === "boolean") patch.active = data.active;
     if (Object.keys(patch).length === 0) return loadStore(false);
     const { error } = await db.from("store_products").update(patch).eq("id", data.id);
     if (error) throw new Error(error.message);
