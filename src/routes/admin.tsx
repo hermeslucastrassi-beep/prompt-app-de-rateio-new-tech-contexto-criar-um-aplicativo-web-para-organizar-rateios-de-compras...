@@ -152,6 +152,11 @@ function AdminPage() {
             <ProductList products={payload.products} onUpdate={update} />
           </TabsContent>
 
+          <TabsContent value="loja" className="mt-6">
+            <StoreAdminPanel />
+          </TabsContent>
+
+
           <TabsContent value="config" className="mt-6 space-y-5">
             <SettingsForm settings={payload.settings} onUpdate={update} />
             <PaymentSettingsPanel />
