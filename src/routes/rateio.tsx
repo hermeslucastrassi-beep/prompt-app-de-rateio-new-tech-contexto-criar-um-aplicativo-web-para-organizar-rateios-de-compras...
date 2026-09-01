@@ -32,7 +32,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/rateio")({
   head: () => ({
     meta: [
       { title: "New Tech — Rateio de Compras em Grupo" },
