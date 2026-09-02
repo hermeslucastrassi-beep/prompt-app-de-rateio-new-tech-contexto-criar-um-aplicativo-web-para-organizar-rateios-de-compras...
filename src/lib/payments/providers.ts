@@ -40,11 +40,11 @@ export const PAYMENT_PROVIDERS: PaymentProviderMeta[] = [
   {
     id: "infinitepay",
     label: "InfinitePay",
-    description: "Links de pagamento e Pix via API da InfinitePay.",
-    credentialLabel: "API Key",
-    credentialHint: "Painel InfinitePay → Desenvolvedores → Chaves de API.",
-    accountIdLabel: "Handle da conta",
-    docsUrl: "https://developers.infinitepay.io",
+    description: "Links de pagamento e Pix via API da InfinitePay. O comerciante é identificado pelo InfiniteTag handle.",
+    credentialLabel: "API Key (opcional)",
+    credentialHint: "Não obrigatório para checkout público. Preencha apenas se tiver uma API key específica.",
+    accountIdLabel: "InfiniteTag handle *",
+    docsUrl: "https://www.infinitepay.io/checkout-documentacao",
     supportsWebhook: true,
   },
   {

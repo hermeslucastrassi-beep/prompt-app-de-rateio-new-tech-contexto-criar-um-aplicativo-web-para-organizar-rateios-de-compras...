@@ -14,57 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      payment_settings: {
-        Row: {
-          active_provider: string
-          configured_at: string | null
-          created_at: string
-          credential_ciphertext: string
-          credential_configured_at: string | null
-          credential_last4: string
-          environment: string
-          id: number
-          integration_status: string
-          last_test_message: string
-          last_tested_at: string | null
-          public_account_id: string
-          updated_at: string
-          webhook_secret_ciphertext: string
-        }
-        Insert: {
-          active_provider?: string
-          configured_at?: string | null
-          created_at?: string
-          credential_ciphertext?: string
-          credential_configured_at?: string | null
-          credential_last4?: string
-          environment?: string
-          id?: number
-          integration_status?: string
-          last_test_message?: string
-          last_tested_at?: string | null
-          public_account_id?: string
-          updated_at?: string
-          webhook_secret_ciphertext?: string
-        }
-        Update: {
-          active_provider?: string
-          configured_at?: string | null
-          created_at?: string
-          credential_ciphertext?: string
-          credential_configured_at?: string | null
-          credential_last4?: string
-          environment?: string
-          id?: number
-          integration_status?: string
-          last_test_message?: string
-          last_tested_at?: string | null
-          public_account_id?: string
-          updated_at?: string
-          webhook_secret_ciphertext?: string
-        }
-        Relationships: []
-      }
       products: {
         Row: {
           closed_batches: number
@@ -132,6 +81,7 @@ export type Database = {
           pin_hash: string
           product_id: string
           quantity: number
+          reference: string | null
           status: string
         }
         Insert: {
@@ -143,6 +93,7 @@ export type Database = {
           pin_hash: string
           product_id: string
           quantity?: number
+          reference?: string
           status?: string
         }
         Update: {
@@ -154,6 +105,7 @@ export type Database = {
           pin_hash?: string
           product_id?: string
           quantity?: number
+          reference?: string
           status?: string
         }
         Relationships: [
@@ -165,39 +117,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      store_products: {
-        Row: {
-          active: boolean
-          created_at: string
-          description: string
-          id: string
-          image_url: string
-          name: string
-          price: number
-          stock: number
-        }
-        Insert: {
-          active?: boolean
-          created_at?: string
-          description?: string
-          id?: string
-          image_url?: string
-          name: string
-          price?: number
-          stock?: number
-        }
-        Update: {
-          active?: boolean
-          created_at?: string
-          description?: string
-          id?: string
-          image_url?: string
-          name?: string
-          price?: number
-          stock?: number
-        }
-        Relationships: []
       }
     }
     Views: {
