@@ -401,7 +401,7 @@ export async function createCheckoutCharge(input: {
     amount,
     description: `Rateio New Tech — ${rows.length} inscrição(ões)`,
     reference,
-    customer: input.customer,
+    ...(input.customer ? { customer: input.customer } : {}),
   });
 
   const { error: ue } = await db.from("signups").update({ reference }).in("id", input.signupIds);
