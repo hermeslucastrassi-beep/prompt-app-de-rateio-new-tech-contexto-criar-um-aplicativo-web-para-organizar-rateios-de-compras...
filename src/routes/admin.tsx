@@ -17,6 +17,7 @@ import {
   adminSetStatus,
 } from "@/lib/rateio.functions";
 import { allocateBatches, brl, perVial, prettyPhone, whatsappHref } from "@/lib/format";
+import { StoreAdminPanel } from "@/components/rateio/StoreAdminPanel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
