@@ -404,10 +404,7 @@ export async function createCheckoutCharge(input: {
     ...(input.customer ? { customer: input.customer } : {}),
   });
 
-  const { error: ue } = await db
-    .from("signups")
-    .update({ reference } as any)
-    .in("id", input.signupIds);
+  const { error: ue } = await db.from("signups").update({ reference }).in("id", input.signupIds);
   if (ue) throw new Error(ue.message);
 
   return { id, checkoutUrl, reference, amount };
