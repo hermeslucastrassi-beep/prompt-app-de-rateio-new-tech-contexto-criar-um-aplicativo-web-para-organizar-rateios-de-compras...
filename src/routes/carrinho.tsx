@@ -199,6 +199,23 @@ function CartPage() {
                   className="space-y-4"
                   onSubmit={(e) => {
                     e.preventDefault();
+                    const email = profile.email.trim().toLowerCase();
+                    if (profile.name.trim().length < 2) {
+                      toast.error("Informe seu nome completo.");
+                      return;
+                    }
+                    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+                      toast.error("E-mail inválido.");
+                      return;
+                    }
+                    if (profile.phone.replace(/[^\d+]/g, "").length < 10) {
+                      toast.error("Telefone inválido (inclua o DDD).");
+                      return;
+                    }
+                    if (!/^\d{4}$/.test(pin)) {
+                      toast.error("O PIN deve ter exatamente 4 dígitos.");
+                      return;
+                    }
                     mutation.mutate();
                   }}
                 >
