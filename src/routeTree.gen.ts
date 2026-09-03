@@ -15,6 +15,7 @@ import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as LojaRouteImport } from './routes/loja'
 import { Route as RateioRouteImport } from './routes/rateio'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiPublicStoreImageSplatRouteImport } from './routes/api/public/store-image/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -47,6 +48,12 @@ const ApiPublicPaymentsWebhookRoute =
     path: '/api/public/payments/webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicStoreImageSplatRoute =
+  ApiPublicStoreImageSplatRouteImport.update({
+    id: '/api/public/store-image/$',
+    path: '/api/public/store-image/$',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -55,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/loja': typeof LojaRoute
   '/rateio': typeof RateioRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/store-image/$': typeof ApiPublicStoreImageSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -63,6 +71,7 @@ export interface FileRoutesByTo {
   '/loja': typeof LojaRoute
   '/rateio': typeof RateioRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/store-image/$': typeof ApiPublicStoreImageSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -72,6 +81,7 @@ export interface FileRoutesById {
   '/loja': typeof LojaRoute
   '/rateio': typeof RateioRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
+  '/api/public/store-image/$': typeof ApiPublicStoreImageSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -82,6 +92,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/rateio'
     | '/api/public/payments/webhook'
+    | '/api/public/store-image/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -90,6 +101,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/rateio'
     | '/api/public/payments/webhook'
+    | '/api/public/store-image/$'
   id:
     | '__root__'
     | '/'
@@ -98,6 +110,7 @@ export interface FileRouteTypes {
     | '/loja'
     | '/rateio'
     | '/api/public/payments/webhook'
+    | '/api/public/store-image/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -107,6 +120,7 @@ export interface RootRouteChildren {
   LojaRoute: typeof LojaRoute
   RateioRoute: typeof RateioRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
+  ApiPublicStoreImageSplatRoute: typeof ApiPublicStoreImageSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -153,6 +167,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/store-image/$': {
+      id: '/api/public/store-image/$'
+      path: '/api/public/store-image/$'
+      fullPath: '/api/public/store-image/$'
+      preLoaderRoute: typeof ApiPublicStoreImageSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -163,6 +184,7 @@ const rootRouteChildren: RootRouteChildren = {
   LojaRoute: LojaRoute,
   RateioRoute: RateioRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
+  ApiPublicStoreImageSplatRoute: ApiPublicStoreImageSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
