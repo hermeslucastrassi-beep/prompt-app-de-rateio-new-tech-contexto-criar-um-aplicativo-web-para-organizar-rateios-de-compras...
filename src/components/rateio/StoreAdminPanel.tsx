@@ -98,7 +98,7 @@ function StoreProductForm() {
             <Input id="store-name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="store-price">Preço (R$)</Label>
+            <Label htmlFor="store-price">Preço por unidade (R$)</Label>
             <Input
               id="store-price"
               inputMode="decimal"
