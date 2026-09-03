@@ -97,8 +97,11 @@ function CartPage() {
               phone: profile.phone,
             },
           });
-          window.location.href = checkout.checkoutUrl;
-          return;
+          if (checkout.checkoutUrl) {
+            window.location.href = checkout.checkoutUrl;
+            return;
+          }
+          throw new Error("Link de checkout não retornado.");
         } catch (err) {
           toast.error(
             `Inscrições salvas, mas o link de pagamento falhou: ${(err as Error).message}. Use o Pix manual.`,
