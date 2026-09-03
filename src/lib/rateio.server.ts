@@ -85,7 +85,7 @@ export async function loadPublicData() {
     };
   });
 
-  return { products: list, settings };
+  return { products: list, settings, payment };
 }
 
 export async function loadSettings() {
