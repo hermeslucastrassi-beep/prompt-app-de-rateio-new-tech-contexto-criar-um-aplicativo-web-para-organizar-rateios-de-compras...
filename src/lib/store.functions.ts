@@ -44,6 +44,33 @@ export const adminGetStoreProducts = createServerFn({ method: "GET" }).handler(a
   return loadStore(false);
 });
 
+const IMAGE_MIME: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
+export const adminUploadStoreImage = createServerFn({ method: "POST" })
+  .inputValidator((data: { dataUrl: string }) => data)
+  .handler(async ({ data }) => {
+    const { db, requireAdmin } = await import("./rateio.server");
+    await requireAdmin();
+    const match = /^data:([a-z0-9/+.-]+);base64,(.+)$/is.exec(data.dataUrl ?? "");
+    if (!match) throw new Error("Imagem inválida.");
+    const mime = match[1].toLowerCase();
+    const ext = IMAGE_MIME[mime];
+    if (!ext) throw new Error("Formato não suportado. Use JPG, PNG ou WebP.");
+    const bytes = Uint8Array.from(atob(match[2]), (c) => c.charCodeAt(0));
+    if (bytes.length > 5 * 1024 * 1024) throw new Error("Imagem muito grande (máximo 5 MB).");
+    const path = `${crypto.randomUUID()}.${ext}`;
+    const { error } = await db.storage.from("store-images").upload(path, bytes, {
+      contentType: mime,
+      upsert: false,
+    });
+    if (error) throw new Error("Falha ao enviar a imagem: " + error.message);
+    return { url: `/api/public/store-image/${path}` };
+  });
+
 export const adminCreateStoreProduct = createServerFn({ method: "POST" })
   .inputValidator(
     (data: {
