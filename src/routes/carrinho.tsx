@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ArrowLeft, Copy, CreditCard, Loader2, Trash2 } from "lucide-react";
 
-import { createCartSignups, getPublicData } from "@/lib/rateio.functions";
+import { createCartSignups, getPublicData, startCheckout } from "@/lib/rateio.functions";
 import { brl, perVial, whatsappHref } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
@@ -44,6 +44,7 @@ function CartPage() {
   const [profile, setProfile] = useState<Profile>({ name: "", email: "", phone: "" });
   const [pin, setPin] = useState("");
   const submit = useServerFn(createCartSignups);
+  const checkoutFn = useServerFn(startCheckout);
 
   useEffect(() => {
     try {
@@ -78,11 +79,38 @@ function CartPage() {
           pin,
         },
       }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["public-data"], result);
+    onSuccess: async (result) => {
+      const { signupIds, ...publicData } = result;
+      queryClient.setQueryData(["public-data"], publicData);
       localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
       clear();
       setPin("");
+
+      if (publicData.payment?.configured && signupIds.length > 0) {
+        try {
+          toast.success("Inscrições registradas! Abrindo pagamento…");
+          const checkout = await checkoutFn({
+            data: {
+              signupIds,
+              name: profile.name,
+              email: profile.email,
+              phone: profile.phone,
+            },
+          });
+          if (checkout.checkoutUrl) {
+            window.location.href = checkout.checkoutUrl;
+            return;
+          }
+          throw new Error("Link de checkout não retornado.");
+        } catch (err) {
+          toast.error(
+            `Inscrições salvas, mas o link de pagamento falhou: ${(err as Error).message}. Use o Pix manual.`,
+          );
+          navigate({ to: "/rateio" });
+          return;
+        }
+      }
+
       toast.success("Inscrições registradas! Faça o pagamento total e envie o comprovante.");
       navigate({ to: "/rateio" });
     },
