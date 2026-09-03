@@ -44,6 +44,7 @@ function CartPage() {
   const [profile, setProfile] = useState<Profile>({ name: "", email: "", phone: "" });
   const [pin, setPin] = useState("");
   const submit = useServerFn(createCartSignups);
+  const checkoutFn = useServerFn(startCheckout);
 
   useEffect(() => {
     try {
