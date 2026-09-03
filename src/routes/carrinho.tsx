@@ -78,11 +78,35 @@ function CartPage() {
           pin,
         },
       }),
-    onSuccess: (result) => {
-      queryClient.setQueryData(["public-data"], result);
+    onSuccess: async (result) => {
+      const { signupIds, ...publicData } = result;
+      queryClient.setQueryData(["public-data"], publicData);
       localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
       clear();
       setPin("");
+
+      if (publicData.payment?.configured && signupIds.length > 0) {
+        try {
+          toast.success("Inscrições registradas! Abrindo pagamento…");
+          const checkout = await checkout_fn({
+            data: {
+              signupIds,
+              name: profile.name,
+              email: profile.email,
+              phone: profile.phone,
+            },
+          });
+          window.location.href = checkout.checkoutUrl;
+          return;
+        } catch (err) {
+          toast.error(
+            `Inscrições salvas, mas o link de pagamento falhou: ${(err as Error).message}. Use o Pix manual.`,
+          );
+          navigate({ to: "/rateio" });
+          return;
+        }
+      }
+
       toast.success("Inscrições registradas! Faça o pagamento total e envie o comprovante.");
       navigate({ to: "/rateio" });
     },
