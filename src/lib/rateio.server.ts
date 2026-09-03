@@ -58,11 +58,17 @@ export type PublicProduct = {
 };
 
 export async function loadPublicData() {
-  const [{ data: products, error: pe }, { data: signups, error: se }, settings] = await Promise.all([
-    db.from("products").select("*").order("created_at", { ascending: true }),
-    db.from("signups").select("id,product_id,name,phone,quantity,status,created_at").order("created_at", { ascending: true }),
-    loadSettings(),
-  ]);
+  const { loadPaymentPublicInfo } = await import("./payments/gateway.server");
+  const [{ data: products, error: pe }, { data: signups, error: se }, settings, payment] =
+    await Promise.all([
+      db.from("products").select("*").order("created_at", { ascending: true }),
+      db
+        .from("signups")
+        .select("id,product_id,name,phone,quantity,status,created_at")
+        .order("created_at", { ascending: true }),
+      loadSettings(),
+      loadPaymentPublicInfo(),
+    ]);
   if (pe) throw new Error(pe.message);
   if (se) throw new Error(se.message);
 
