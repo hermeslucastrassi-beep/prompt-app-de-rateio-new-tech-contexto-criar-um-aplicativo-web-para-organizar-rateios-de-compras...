@@ -91,18 +91,21 @@ export const createCartSignups = createServerFn({ method: "POST" })
     if (rows.length === 0) throw new Error("Nenhum produto válido no carrinho.");
 
     const pinHash = hashSecret(pin);
-    const { error } = await db.from("signups").insert(
-      rows.map((i) => ({
-        product_id: i.productId,
-        name,
-        email,
-        phone,
-        quantity: i.quantity,
-        pin_hash: pinHash,
-      })),
-    );
+    const { data: inserted, error } = await db
+      .from("signups")
+      .insert(
+        rows.map((i) => ({
+          product_id: i.productId,
+          name,
+          email,
+          phone,
+          quantity: i.quantity,
+          pin_hash: pinHash,
+        })),
+      )
+      .select("id");
     if (error) throw new Error(error.message);
-    return loadPublicData();
+    return { ...(await loadPublicData()), signupIds: (inserted ?? []).map((r) => r.id) };
   });
 
 export const deleteOwnSignup = createServerFn({ method: "POST" })
