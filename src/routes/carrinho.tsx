@@ -89,7 +89,7 @@ function CartPage() {
       if (publicData.payment?.configured && signupIds.length > 0) {
         try {
           toast.success("Inscrições registradas! Abrindo pagamento…");
-          const checkout = await checkout_fn({
+          const checkout = await checkoutFn({
             data: {
               signupIds,
               name: profile.name,
