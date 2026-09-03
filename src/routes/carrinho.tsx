@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ArrowLeft, Copy, CreditCard, Loader2, Trash2 } from "lucide-react";
 
-import { createCartSignups, getPublicData } from "@/lib/rateio.functions";
+import { createCartSignups, getPublicData, startCheckout } from "@/lib/rateio.functions";
 import { brl, perVial, whatsappHref } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
