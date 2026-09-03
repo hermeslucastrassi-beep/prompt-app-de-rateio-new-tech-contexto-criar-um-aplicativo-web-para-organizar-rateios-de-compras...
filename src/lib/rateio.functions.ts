@@ -308,3 +308,32 @@ export const adminTestPaymentConnection = createServerFn({ method: "POST" }).han
   const { testPaymentConnection } = await import("./payments/gateway.server");
   return testPaymentConnection();
 });
+
+/* ---------- Pagamentos: checkout automático ---------- */
+
+export const startCheckout = createServerFn({ method: "POST" })
+  .inputValidator(
+    (data: {
+      signupIds: string[];
+      name?: string;
+      email?: string;
+      phone?: string;
+    }) => data,
+  )
+  .handler(async ({ data }) => {
+    const ids = (data.signupIds ?? []).map(String).filter(Boolean).slice(0, 50);
+    if (ids.length === 0) throw new Error("Nenhuma inscrição informada.");
+    const { createCheckoutCharge } = await import("./payments/gateway.server");
+    return createCheckoutCharge({
+      signupIds: ids,
+      ...(data.name || data.email || data.phone
+        ? {
+            customer: {
+              ...(data.name ? { name: data.name } : {}),
+              ...(data.email ? { email: data.email } : {}),
+              ...(data.phone ? { phone: data.phone } : {}),
+            },
+          }
+        : {}),
+    });
+  });
