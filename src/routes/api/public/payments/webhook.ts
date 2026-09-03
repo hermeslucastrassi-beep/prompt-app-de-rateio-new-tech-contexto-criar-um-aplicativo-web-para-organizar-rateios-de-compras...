@@ -18,7 +18,9 @@ export const Route = createFileRoute("/api/public/payments/webhook")({
         );
         const ctx = await loadPaymentContext();
         if (ctx.provider === "none") {
-          return new Response("Payments not configured", { status: 503 });
+          // Nenhuma plataforma conectada: aceita e ignora o evento
+          // (503 fazia a rota estourar como erro de runtime no preview).
+          return new Response("ok (payments not configured)", { status: 200 });
         }
 
         const valid = await getAdapter(ctx.provider).verifyWebhook(ctx, { rawBody, headers });
