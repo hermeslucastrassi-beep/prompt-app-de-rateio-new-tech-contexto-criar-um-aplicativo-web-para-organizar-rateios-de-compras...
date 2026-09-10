@@ -106,13 +106,9 @@ function AdminPage() {
             <h1 className="mt-1 text-2xl font-bold">Administração</h1>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <Link to="/">
-                <ArrowLeft className="size-4" /> Início
-              </Link>
-            </Button>
             <LogoutButton />
           </div>
+
         </div>
       </header>
 
