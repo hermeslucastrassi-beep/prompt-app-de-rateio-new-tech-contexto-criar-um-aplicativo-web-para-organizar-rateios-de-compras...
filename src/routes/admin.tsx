@@ -31,16 +31,16 @@ import { PaymentSettingsPanel } from "@/components/rateio/PaymentSettingsPanel";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Administração — Rateio New Tech" },
+      { title: "Administração — Rateio Conexão China" },
       {
         name: "description",
         content:
-          "Área do administrador do rateio New Tech: cadastro de produtos, confirmação de pagamentos e configurações.",
+          "Área do administrador do rateio Conexão China: cadastro de produtos, confirmação de pagamentos e configurações.",
       },
-      { property: "og:title", content: "Administração — Rateio New Tech" },
+      { property: "og:title", content: "Administração — Rateio Conexão China" },
       {
         property: "og:description",
-        content: "Gerencie produtos, inscritos, lotes e formas de pagamento do grupo New Tech.",
+        content: "Gerencie produtos, inscritos, lotes e formas de pagamento do grupo Conexão China.",
       },
       { name: "robots", content: "noindex" },
     ],
@@ -101,7 +101,7 @@ function AdminPage() {
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              New Tech
+              Conexão China
             </p>
             <h1 className="mt-1 text-2xl font-bold">Administração</h1>
           </div>

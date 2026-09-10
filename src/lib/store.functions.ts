@@ -57,10 +57,13 @@ export const adminUploadStoreImage = createServerFn({ method: "POST" })
     await requireAdmin();
     const match = /^data:([a-z0-9/+.-]+);base64,(.+)$/is.exec(data.dataUrl ?? "");
     if (!match) throw new Error("Imagem inválida.");
-    const mime = match[1].toLowerCase();
+    const mimeGroup = match[1];
+    const payload = match[2];
+    if (!mimeGroup || !payload) throw new Error("Imagem inválida.");
+    const mime = mimeGroup.toLowerCase();
     const ext = IMAGE_MIME[mime];
     if (!ext) throw new Error("Formato não suportado. Use JPG, PNG ou WebP.");
-    const bytes = Uint8Array.from(atob(match[2]), (c) => c.charCodeAt(0));
+    const bytes = Uint8Array.from(atob(payload), (c) => c.charCodeAt(0));
     if (bytes.length > 5 * 1024 * 1024) throw new Error("Imagem muito grande (máximo 5 MB).");
     const path = `${crypto.randomUUID()}.${ext}`;
     const { error } = await db.storage.from("store-images").upload(path, bytes, {

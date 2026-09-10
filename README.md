@@ -1,10 +1,10 @@
-# Prompt App de Rateio New Tech Contexto Criar um aplicativo web para organizar rateios de compras...
+# Prompt App de Rateio Conexão China Contexto Criar um aplicativo web para organizar rateios de compras...
 
-# Prompt — App de Rateio "New Tech"
+# Prompt — App de Rateio "Conexão China"
 
 ## Contexto
 
-Criar um aplicativo web para organizar rateios de compras internacionais do grupo **New Tech**. Os produtos são comprados em lotes fixos de **10 unidades (viais/ampolas)**, e o app deve permitir que participantes se inscrevam nas listas de cada produto, escolhendo a quantidade de viais que desejam, até que lotes de 10 sejam fechados para compra.
+Criar um aplicativo web para organizar rateios de compras internacionais do grupo **Conexão China**. Os produtos são comprados em lotes fixos de **10 unidades (viais/ampolas)**, e o app deve permitir que participantes se inscrevam nas listas de cada produto, escolhendo a quantidade de viais que desejam, até que lotes de 10 sejam fechados para compra.
 
 ## Funcionalidades gerais
 

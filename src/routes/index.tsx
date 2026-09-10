@@ -4,16 +4,16 @@ import { Lock, Store, Users } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "New Tech — Rateio e Loja a Pronta Entrega" },
+      { title: "Conexão China — Rateio e Loja a Pronta Entrega" },
       {
         name: "description",
         content:
-          "Escolha participar de um rateio em grupo, comprar na loja a pronta entrega ou acessar a área do administrador do grupo New Tech.",
+          "Escolha participar de um rateio em grupo, comprar na loja a pronta entrega ou acessar a área do administrador do grupo Conexão China.",
       },
-      { property: "og:title", content: "New Tech — Rateio e Loja a Pronta Entrega" },
+      { property: "og:title", content: "Conexão China — Rateio e Loja a Pronta Entrega" },
       {
         property: "og:description",
-        content: "Participe do rateio, compre a pronta entrega ou administre o grupo New Tech.",
+        content: "Participe do rateio, compre a pronta entrega ou administre o grupo Conexão China.",
       },
     ],
   }),
@@ -47,7 +47,7 @@ function HomePage() {
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-8 px-5 py-14">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-            Grupo New Tech
+            Grupo Conexão China
           </p>
           <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Como você quer comprar hoje?</h1>
           <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">

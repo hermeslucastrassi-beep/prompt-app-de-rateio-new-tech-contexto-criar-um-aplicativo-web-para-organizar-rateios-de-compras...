@@ -79,11 +79,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "New Tech — Rateio de Compras" },
+      { title: "Conexão China — Rateio de Compras" },
       {
         name: "description",
         content:
-          "Organize os rateios do grupo New Tech: lotes de viais, inscrições e status de pagamento em um só lugar.",
+          "Organize os rateios do grupo Conexão China: lotes de viais, inscrições e status de pagamento em um só lugar.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
