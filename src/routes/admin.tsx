@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { ArrowLeft, Check, Loader2, LogOut, MessageCircle, PackageCheck, Trash2 } from "lucide-react";
+import { Check, Loader2, LogOut, MessageCircle, PackageCheck, Trash2 } from "lucide-react";
 
 import {
   adminCloseBatch,
