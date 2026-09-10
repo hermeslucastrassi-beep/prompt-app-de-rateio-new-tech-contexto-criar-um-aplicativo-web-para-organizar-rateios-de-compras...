@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { ArrowLeft, Copy, CreditCard, Loader2, MessageCircle } from "lucide-react";
+import { Copy, CreditCard, Loader2, MessageCircle } from "lucide-react";
 
 import { getStoreProducts } from "@/lib/store.functions";
 import { brl, whatsappHref } from "@/lib/format";
