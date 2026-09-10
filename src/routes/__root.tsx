@@ -6,12 +6,15 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Home } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+
 
 
 function NotFoundComponent() {
@@ -128,10 +131,28 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <HomeButton />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }
+
+function HomeButton() {
+  const state = useRouterState();
+  const path = state.location.pathname;
+  if (path === "/") return null;
+
+  return (
+    <Link
+      to="/"
+      className="fixed left-4 top-4 z-50 inline-flex items-center gap-2 rounded-full border border-border bg-background/90 px-4 py-2 text-sm font-medium text-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-accent"
+    >
+      <Home className="size-4" />
+      <span>Início</span>
+    </Link>
+  );
+}
+
 

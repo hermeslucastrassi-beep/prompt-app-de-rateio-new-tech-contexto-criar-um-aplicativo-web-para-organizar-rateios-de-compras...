@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { ArrowLeft, Check, Loader2, LogOut, MessageCircle, PackageCheck, Trash2 } from "lucide-react";
+import { Check, Loader2, LogOut, MessageCircle, PackageCheck, Trash2 } from "lucide-react";
 
 import {
   adminCloseBatch,
@@ -106,13 +106,9 @@ function AdminPage() {
             <h1 className="mt-1 text-2xl font-bold">Administração</h1>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
-              <Link to="/">
-                <ArrowLeft className="size-4" /> Início
-              </Link>
-            </Button>
             <LogoutButton />
           </div>
+
         </div>
       </header>
 

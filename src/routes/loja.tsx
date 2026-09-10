@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
-import { ArrowLeft, Copy, CreditCard, Loader2, MessageCircle } from "lucide-react";
+import { Copy, CreditCard, Loader2, MessageCircle } from "lucide-react";
 
 import { getStoreProducts } from "@/lib/store.functions";
 import { brl, whatsappHref } from "@/lib/format";
@@ -52,19 +52,13 @@ function StorePage() {
     <main className="min-h-screen bg-background">
       <header className="bg-hero border-b border-border">
         <div className="mx-auto flex max-w-5xl flex-col gap-4 px-5 py-10">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                Grupo Conexão China
-              </p>
-              <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Loja a pronta entrega</h1>
-            </div>
-            <Button asChild variant="outline" size="sm">
-              <Link to="/">
-                <ArrowLeft className="size-4" /> Início
-              </Link>
-            </Button>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+              Grupo Conexão China
+            </p>
+            <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Loja a pronta entrega</h1>
           </div>
+
           <p className="max-w-2xl text-sm text-muted-foreground">
             Produtos em estoque com envio imediato. Escolha o item, pague via Pix ou cartão e envie o
             comprovante pelo WhatsApp para combinar a entrega.
