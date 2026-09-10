@@ -146,7 +146,7 @@ const infinitePayAdapter: PaymentAdapter = {
 
     const res = await infinitePayRequest(ctx, "/links", {
       handle,
-      items: [{ quantity: 1, price: 100, description: "Teste de conexão New Tech" }],
+      items: [{ quantity: 1, price: 100, description: "Teste de conexão Conexão China" }],
       order_nsu: `test-${Date.now()}`,
       redirect_url: buildWebhookUrl().replace("/webhook", ""),
     });
@@ -399,7 +399,7 @@ export async function createCheckoutCharge(input: {
 
   const { id, checkoutUrl } = await getAdapter(ctx.provider).createCharge(ctx, {
     amount,
-    description: `Rateio New Tech — ${rows.length} inscrição(ões)`,
+    description: `Rateio Conexão China — ${rows.length} inscrição(ões)`,
     reference,
     ...(input.customer ? { customer: input.customer } : {}),
   });

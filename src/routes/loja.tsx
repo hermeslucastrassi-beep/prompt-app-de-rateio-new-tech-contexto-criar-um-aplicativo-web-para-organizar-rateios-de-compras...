@@ -13,13 +13,13 @@ import { Badge } from "@/components/ui/badge";
 export const Route = createFileRoute("/loja")({
   head: () => ({
     meta: [
-      { title: "Loja a Pronta Entrega — New Tech" },
+      { title: "Loja a Pronta Entrega — Conexão China" },
       {
         name: "description",
         content:
-          "Produtos New Tech disponíveis a pronta entrega: veja preço, estoque e feche o pedido direto pelo WhatsApp.",
+          "Produtos Conexão China disponíveis a pronta entrega: veja preço, estoque e feche o pedido direto pelo WhatsApp.",
       },
-      { property: "og:title", content: "Loja a Pronta Entrega — New Tech" },
+      { property: "og:title", content: "Loja a Pronta Entrega — Conexão China" },
       {
         property: "og:description",
         content: "Estoque imediato, sem esperar o fechamento de lote. Preços e disponibilidade atualizados.",
@@ -55,7 +55,7 @@ function StorePage() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                Grupo New Tech
+                Grupo Conexão China
               </p>
               <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Loja a pronta entrega</h1>
             </div>
