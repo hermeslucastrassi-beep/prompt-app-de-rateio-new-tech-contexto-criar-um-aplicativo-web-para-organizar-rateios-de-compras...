@@ -139,6 +139,7 @@ export async function loadAdminData() {
   ]);
   if (pe) throw new Error(pe.message);
   if (se) throw new Error(se.message);
+  await syncClosedBatches(products ?? [], signups ?? []);
   return {
     settings,
     products: (products ?? []).map((p) => ({
