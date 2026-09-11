@@ -3,6 +3,7 @@ import { allocateBatches, brl, perVial, prettyPhone } from "./format";
 type Signup = {
   id: string;
   name: string;
+  email?: string;
   phone: string;
   quantity: number;
   status: string;
@@ -34,6 +35,7 @@ function productSection(product: Product) {
       ({ row, batchIndex }) => `
         <tr>
           <td>${escape(row.name)}</td>
+          <td>${escape(row.email ?? "")}</td>
           <td>${escape(prettyPhone(row.phone))}</td>
           <td class="num">${row.quantity}</td>
           <td class="num">${brl(unitPrice * row.quantity)}</td>
@@ -55,7 +57,7 @@ function productSection(product: Product) {
         rows
           ? `<table>
               <thead>
-                <tr><th>Nome</th><th>Telefone</th><th>Viais</th><th>Valor</th><th>Lote</th><th>Status</th></tr>
+                <tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Viais</th><th>Valor</th><th>Lote</th><th>Status</th></tr>
               </thead>
               <tbody>${rows}</tbody>
             </table>`
