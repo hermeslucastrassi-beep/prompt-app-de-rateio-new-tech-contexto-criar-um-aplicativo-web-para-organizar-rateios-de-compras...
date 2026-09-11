@@ -132,6 +132,22 @@ function AdminPage() {
 
 
           <TabsContent value="resumo" className="mt-6 space-y-5">
+            <div className="flex justify-end">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={payload.products.length === 0}
+                onClick={() => {
+                  try {
+                    exportRateioPdf(payload.products, payload.settings);
+                  } catch (err) {
+                    toast.error((err as Error).message);
+                  }
+                }}
+              >
+                <FileDown className="size-4" /> Exportar PDF
+              </Button>
+            </div>
             {payload.products.length === 0 && (
               <p className="text-sm text-muted-foreground">Cadastre um produto para começar.</p>
             )}
