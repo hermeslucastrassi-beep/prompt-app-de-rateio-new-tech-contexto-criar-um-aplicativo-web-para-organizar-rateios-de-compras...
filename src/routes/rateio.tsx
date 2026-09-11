@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import {
   Copy,
   CreditCard,
+  FileDown,
   Loader2,
   Lock,
   ShieldCheck,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { deleteOwnSignup, getPublicData } from "@/lib/rateio.functions";
+import { exportRateioPdf } from "@/lib/rateio-pdf";
 import { allocateBatches, brl, perVial, prettyPhone, whatsappHref } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 import { VialTray } from "@/components/rateio/VialTray";
