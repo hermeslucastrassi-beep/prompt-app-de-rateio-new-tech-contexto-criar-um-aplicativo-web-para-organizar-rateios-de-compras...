@@ -57,6 +57,37 @@ export type PublicProduct = {
   signups: PublicSignup[];
 };
 
+/**
+ * Fecha lotes automaticamente: sempre que a soma de viais reservados
+ * completa um múltiplo das unidades por lote, o lote é registrado como
+ * fechado para o administrador.
+ */
+export async function syncClosedBatches(
+  products: { id: string; units_per_batch: number; closed_batches: number }[],
+  signups: { product_id: string; quantity: number }[],
+) {
+  const updated = new Map<string, number>();
+  for (const p of products) {
+    const reserved = signups
+      .filter((s) => s.product_id === p.id)
+      .reduce((acc, s) => acc + s.quantity, 0);
+    const units = Math.max(1, p.units_per_batch);
+    const shouldBeClosed = Math.floor(reserved / units);
+    if (shouldBeClosed > p.closed_batches) updated.set(p.id, shouldBeClosed);
+  }
+  if (updated.size === 0) return updated;
+  await Promise.all(
+    [...updated.entries()].map(([id, closed]) =>
+      db.from("products").update({ closed_batches: closed }).eq("id", id),
+    ),
+  );
+  for (const p of products) {
+    const next = updated.get(p.id);
+    if (next !== undefined) p.closed_batches = next;
+  }
+  return updated;
+}
+
 export async function loadPublicData() {
   const { loadPaymentPublicInfo } = await import("./payments/gateway.server");
   const [{ data: products, error: pe }, { data: signups, error: se }, settings, payment] =
@@ -71,6 +102,8 @@ export async function loadPublicData() {
     ]);
   if (pe) throw new Error(pe.message);
   if (se) throw new Error(se.message);
+
+  await syncClosedBatches(products ?? [], signups ?? []);
 
   const list: PublicProduct[] = (products ?? []).map((p) => {
     const rows = (signups ?? []).filter((s) => s.product_id === p.id);
@@ -106,6 +139,7 @@ export async function loadAdminData() {
   ]);
   if (pe) throw new Error(pe.message);
   if (se) throw new Error(se.message);
+  await syncClosedBatches(products ?? [], signups ?? []);
   return {
     settings,
     products: (products ?? []).map((p) => ({
