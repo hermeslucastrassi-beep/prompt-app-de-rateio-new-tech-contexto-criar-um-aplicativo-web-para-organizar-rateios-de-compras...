@@ -103,6 +103,8 @@ export async function loadPublicData() {
   if (pe) throw new Error(pe.message);
   if (se) throw new Error(se.message);
 
+  await syncClosedBatches(products ?? [], signups ?? []);
+
   const list: PublicProduct[] = (products ?? []).map((p) => {
     const rows = (signups ?? []).filter((s) => s.product_id === p.id);
     return {
