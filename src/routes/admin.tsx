@@ -295,6 +295,11 @@ function SummaryCard({
               {brl(unitPrice)}/vial · lote de {product.units_per_batch} · {inCurrent}/
               {product.units_per_batch} reservados no lote atual · {product.closed_batches} fechados
             </p>
+            <p className="text-xs text-muted-foreground">
+              {product.closed_batches > 0
+                ? `${product.closed_batches} lote(s) fechado(s) automaticamente a cada ${product.units_per_batch} viais reservados.`
+                : `O lote fecha automaticamente ao atingir ${product.units_per_batch} viais reservados.`}
+            </p>
           </div>
           <Button
             size="sm"
