@@ -82,6 +82,21 @@ function PublicPage() {
                   )}
                 </Link>
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!data}
+                onClick={() => {
+                  if (!data) return;
+                  try {
+                    exportRateioPdf(data.products, data.settings);
+                  } catch (err) {
+                    toast.error((err as Error).message);
+                  }
+                }}
+              >
+                <FileDown className="size-4" /> Exportar PDF
+              </Button>
               <Button asChild variant="outline" size="sm">
                 <Link to="/admin">
                   <Lock className="size-4" /> Admin
