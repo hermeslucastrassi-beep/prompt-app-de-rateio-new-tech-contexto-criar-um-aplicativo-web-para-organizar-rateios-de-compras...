@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Check, Loader2, LogOut, MessageCircle, PackageCheck, Trash2 } from "lucide-react";
+import { Check, FileDown, Loader2, LogOut, MessageCircle, PackageCheck, Trash2 } from "lucide-react";
 
 import {
   adminCloseBatch,
@@ -26,6 +26,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { PaymentSettingsPanel } from "@/components/rateio/PaymentSettingsPanel";
+import { exportRateioPdf } from "@/lib/rateio-pdf";
 
 
 export const Route = createFileRoute("/admin")({
@@ -131,6 +132,22 @@ function AdminPage() {
 
 
           <TabsContent value="resumo" className="mt-6 space-y-5">
+            <div className="flex justify-end">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={payload.products.length === 0}
+                onClick={() => {
+                  try {
+                    exportRateioPdf(payload.products, payload.settings);
+                  } catch (err) {
+                    toast.error((err as Error).message);
+                  }
+                }}
+              >
+                <FileDown className="size-4" /> Exportar PDF
+              </Button>
+            </div>
             {payload.products.length === 0 && (
               <p className="text-sm text-muted-foreground">Cadastre um produto para começar.</p>
             )}
