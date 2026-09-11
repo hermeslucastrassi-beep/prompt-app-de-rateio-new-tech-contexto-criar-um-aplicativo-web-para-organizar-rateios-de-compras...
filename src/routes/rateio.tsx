@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import {
   Copy,
   CreditCard,
+  FileDown,
   Loader2,
   Lock,
   ShieldCheck,
@@ -14,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { deleteOwnSignup, getPublicData } from "@/lib/rateio.functions";
+import { exportRateioPdf } from "@/lib/rateio-pdf";
 import { allocateBatches, brl, perVial, prettyPhone, whatsappHref } from "@/lib/format";
 import { useCart } from "@/lib/cart";
 import { VialTray } from "@/components/rateio/VialTray";
@@ -79,6 +81,21 @@ function PublicPage() {
                     <Badge className="ml-1 bg-primary-foreground text-primary">{count}</Badge>
                   )}
                 </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={!data}
+                onClick={() => {
+                  if (!data) return;
+                  try {
+                    exportRateioPdf(data.products, data.settings);
+                  } catch (err) {
+                    toast.error((err as Error).message);
+                  }
+                }}
+              >
+                <FileDown className="size-4" /> Exportar PDF
               </Button>
               <Button asChild variant="outline" size="sm">
                 <Link to="/admin">
