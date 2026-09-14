@@ -73,6 +73,7 @@ type AdminSettings = {
   card_link: string;
   whatsapp: string;
   payment_days: number;
+  rateio_title: string;
 };
 
 type AdminPayload = { products: AdminProduct[]; settings: AdminSettings };
