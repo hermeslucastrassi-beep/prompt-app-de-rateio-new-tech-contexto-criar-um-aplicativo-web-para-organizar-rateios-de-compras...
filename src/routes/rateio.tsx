@@ -35,13 +35,13 @@ import {
 export const Route = createFileRoute("/rateio")({
   head: () => ({
     meta: [
-      { title: "Conexão China — Rateio de Compras em Grupo" },
+      { title: "Nova era peptídeos — Rateio de Compras em Grupo" },
       {
         name: "description",
         content:
-          "Participe dos rateios do grupo Conexão China: escolha quantos viais quer, acompanhe o lote e o status do seu pagamento.",
+          "Participe dos rateios do grupo Nova era peptídeos: escolha quantos viais quer, acompanhe o lote e o status do seu pagamento.",
       },
-      { property: "og:title", content: "Conexão China — Rateio de Compras em Grupo" },
+      { property: "og:title", content: "Nova era peptídeos — Rateio de Compras em Grupo" },
       {
         property: "og:description",
         content: "Lotes de 10 viais, inscrições abertas e status de pagamento em tempo real.",
@@ -67,7 +67,7 @@ function PublicPage() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                Grupo Conexão China
+                Grupo Nova era peptídeos
               </p>
               <h1 className="mt-2 text-3xl font-bold sm:text-4xl">Rateio de compras</h1>
             </div>
@@ -161,7 +161,7 @@ function PaymentInfo({ settings }: { settings: Settings }) {
         {settings.whatsapp && (
           <Button asChild>
             <a
-              href={whatsappHref(settings.whatsapp, "Olá! Segue o comprovante do rateio Conexão China.")}
+              href={whatsappHref(settings.whatsapp, "Olá! Segue o comprovante do rateio Nova era peptídeos.")}
               target="_blank"
               rel="noreferrer"
             >

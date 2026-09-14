@@ -16,13 +16,13 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/carrinho")({
   head: () => ({
     meta: [
-      { title: "Carrinho — Rateio Conexão China" },
+      { title: "Carrinho — Rateio Nova era peptídeos" },
       {
         name: "description",
         content:
-          "Revise os viais escolhidos em todos os produtos e finalize a inscrição do rateio Conexão China em um único pagamento.",
+          "Revise os viais escolhidos em todos os produtos e finalize a inscrição do rateio Nova era peptídeos em um único pagamento.",
       },
-      { property: "og:title", content: "Carrinho — Rateio Conexão China" },
+      { property: "og:title", content: "Carrinho — Rateio Nova era peptídeos" },
       {
         property: "og:description",
         content: "Finalize todas as suas reservas de viais de uma só vez.",
@@ -135,7 +135,7 @@ function CartPage() {
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-5 py-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              Grupo Conexão China
+              Grupo Nova era peptídeos
             </p>
             <h1 className="mt-2 text-2xl font-bold sm:text-3xl">Seu carrinho</h1>
           </div>
@@ -330,7 +330,7 @@ function CartPage() {
                       <a
                         href={whatsappHref(
                           settings.whatsapp,
-                          `Olá! Segue o comprovante do rateio Conexão China (total ${brl(total)}).`,
+                          `Olá! Segue o comprovante do rateio Nova era peptídeos (total ${brl(total)}).`,
                         )}
                         target="_blank"
                         rel="noreferrer"
