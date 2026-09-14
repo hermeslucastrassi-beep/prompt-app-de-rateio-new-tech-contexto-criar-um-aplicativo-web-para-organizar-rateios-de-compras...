@@ -49,12 +49,11 @@ function HomePage() {
             alt="Laboratório Nova era peptídeos"
             className="mx-auto mb-6 h-auto max-h-72 w-full max-w-md rounded-2xl object-cover shadow-panel"
           />
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl">
             Grupo Nova era peptídeos
-          </p>
-          <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Como você quer comprar hoje?</h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
-            Escolha uma das opções abaixo para continuar.
+          </h1>
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
+            Rateio em grupo
           </p>
         </div>
 
