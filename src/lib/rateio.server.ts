@@ -124,11 +124,13 @@ export async function loadPublicData() {
 export async function loadSettings() {
   const { data, error } = await db
     .from("settings")
-    .select("pix_key,card_link,whatsapp,payment_days")
+    .select("pix_key,card_link,whatsapp,payment_days,rateio_title")
     .eq("id", 1)
     .maybeSingle();
   if (error) throw new Error(error.message);
-  return data ?? { pix_key: "", card_link: "", whatsapp: "", payment_days: 5 };
+  return (
+    data ?? { pix_key: "", card_link: "", whatsapp: "", payment_days: 5, rateio_title: "" }
+  );
 }
 
 export async function loadAdminData() {
