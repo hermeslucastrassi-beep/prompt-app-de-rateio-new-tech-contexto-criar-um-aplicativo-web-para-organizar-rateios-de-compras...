@@ -1,19 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Lock, Store, Users } from "lucide-react";
 
+import landingImage from "../assets/nova-era-landing.png.asset.json";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Conexão China — Rateio e Loja a Pronta Entrega" },
+      { title: "Nova era peptídeos — Rateio e Loja a Pronta Entrega" },
       {
         name: "description",
         content:
-          "Escolha participar de um rateio em grupo, comprar na loja a pronta entrega ou acessar a área do administrador do grupo Conexão China.",
+          "Escolha participar de um rateio em grupo, comprar na loja a pronta entrega ou acessar a área do administrador do grupo Nova era peptídeos.",
       },
-      { property: "og:title", content: "Conexão China — Rateio e Loja a Pronta Entrega" },
+      { property: "og:title", content: "Nova era peptídeos — Rateio e Loja a Pronta Entrega" },
       {
         property: "og:description",
-        content: "Participe do rateio, compre a pronta entrega ou administre o grupo Conexão China.",
+        content: "Participe do rateio, compre a pronta entrega ou administre o grupo Nova era peptídeos.",
       },
     ],
   }),
@@ -46,8 +48,13 @@ function HomePage() {
     <main className="bg-hero min-h-screen">
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center gap-8 px-5 py-14">
         <div className="text-center">
+          <img
+            src={landingImage.url}
+            alt="Laboratório Nova era peptídeos"
+            className="mx-auto mb-6 h-auto max-h-72 w-full max-w-md rounded-2xl object-cover shadow-panel"
+          />
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">
-            Grupo Conexão China
+            Grupo Nova era peptídeos
           </p>
           <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Como você quer comprar hoje?</h1>
           <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">
