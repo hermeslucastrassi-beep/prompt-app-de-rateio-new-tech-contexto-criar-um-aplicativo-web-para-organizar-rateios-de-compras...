@@ -267,6 +267,29 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
     return loadAdminData();
   });
 
+export const adminResetRateio = createServerFn({ method: "POST" })
+  .inputValidator((data: { deleteProducts?: boolean }) => data)
+  .handler(async ({ data }) => {
+    const { db, requireAdmin, loadAdminData } = await import("./rateio.server");
+    await requireAdmin();
+    const { error: se } = await db.from("signups").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    if (se) throw new Error(se.message);
+    if (data.deleteProducts) {
+      const { error: pe } = await db
+        .from("products")
+        .delete()
+        .neq("id", "00000000-0000-0000-0000-000000000000");
+      if (pe) throw new Error(pe.message);
+    } else {
+      const { error: ue } = await db
+        .from("products")
+        .update({ closed_batches: 0 })
+        .neq("id", "00000000-0000-0000-0000-000000000000");
+      if (ue) throw new Error(ue.message);
+    }
+    return loadAdminData();
+  });
+
 /* ---------- Pagamentos: configuração do proprietário ---------- */
 
 export const adminGetPaymentSettings = createServerFn({ method: "GET" }).handler(async () => {
