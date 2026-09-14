@@ -234,6 +234,7 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
       cardLink: string;
       whatsapp: string;
       paymentDays: number;
+      rateioTitle?: string;
       newPassword?: string;
     }) => data,
   )
@@ -245,9 +246,11 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
       card_link: string;
       whatsapp: string;
       payment_days: number;
+      rateio_title: string;
       updated_at: string;
       admin_password_hash?: string;
     } = {
+      rateio_title: (data.rateioTitle ?? "").trim().slice(0, 120),
       pix_key: data.pixKey.trim().slice(0, 255),
       card_link: data.cardLink.trim().slice(0, 500),
       whatsapp: data.whatsapp.replace(/[^\d+]/g, "").slice(0, 20),
@@ -261,6 +264,29 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
     }
     const { error } = await db.from("settings").update(patch).eq("id", 1);
     if (error) throw new Error(error.message);
+    return loadAdminData();
+  });
+
+export const adminResetRateio = createServerFn({ method: "POST" })
+  .inputValidator((data: { deleteProducts?: boolean }) => data)
+  .handler(async ({ data }) => {
+    const { db, requireAdmin, loadAdminData } = await import("./rateio.server");
+    await requireAdmin();
+    const { error: se } = await db.from("signups").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    if (se) throw new Error(se.message);
+    if (data.deleteProducts) {
+      const { error: pe } = await db
+        .from("products")
+        .delete()
+        .neq("id", "00000000-0000-0000-0000-000000000000");
+      if (pe) throw new Error(pe.message);
+    } else {
+      const { error: ue } = await db
+        .from("products")
+        .update({ closed_batches: 0 })
+        .neq("id", "00000000-0000-0000-0000-000000000000");
+      if (ue) throw new Error(ue.message);
+    }
     return loadAdminData();
   });
 

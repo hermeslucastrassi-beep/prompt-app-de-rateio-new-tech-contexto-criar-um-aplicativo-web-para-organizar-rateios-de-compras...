@@ -99,6 +99,7 @@ export type Database = {
           id: number
           payment_days: number
           pix_key: string
+          rateio_title: string
           updated_at: string
           whatsapp: string
         }
@@ -108,6 +109,7 @@ export type Database = {
           id?: number
           payment_days?: number
           pix_key?: string
+          rateio_title?: string
           updated_at?: string
           whatsapp?: string
         }
@@ -117,6 +119,7 @@ export type Database = {
           id?: number
           payment_days?: number
           pix_key?: string
+          rateio_title?: string
           updated_at?: string
           whatsapp?: string
         }
