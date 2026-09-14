@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Conexão China — design system.
+ * Nova era peptídeos — design system.
  * Dark "lab tech" look: deep slate surfaces, teal/cyan accent, amber for pending.
  * All colors are oklch semantic tokens. Never hardcode colors in components.
  */

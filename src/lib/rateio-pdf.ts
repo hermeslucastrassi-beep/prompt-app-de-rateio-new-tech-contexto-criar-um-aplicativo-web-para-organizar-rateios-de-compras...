@@ -72,7 +72,7 @@ export function exportRateioPdf(products: Product[], settings: Settings) {
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
-<title>Rateio Conexão China — ${escape(now)}</title>
+<title>Rateio Nova era peptídeos — ${escape(now)}</title>
 <style>
   @page { size: A4; margin: 16mm; }
   * { box-sizing: border-box; }
@@ -92,7 +92,7 @@ export function exportRateioPdf(products: Product[], settings: Settings) {
 </head>
 <body>
   <header>
-    <h1>Rateio de compras — Conexão China</h1>
+    <h1>Rateio de compras — Nova era peptídeos</h1>
     <p>Gerado em ${escape(now)}</p>
     <p>Prazo de pagamento: ${settings.payment_days} dias${
       settings.pix_key ? ` · Chave Pix: ${escape(settings.pix_key)}` : ""
@@ -103,7 +103,7 @@ export function exportRateioPdf(products: Product[], settings: Settings) {
       ? products.map(productSection).join("")
       : `<p class="meta">Nenhum produto cadastrado.</p>`
   }
-  <footer>Documento gerado automaticamente pelo aplicativo Conexão China.</footer>
+  <footer>Documento gerado automaticamente pelo aplicativo Nova era peptídeos.</footer>
   <script>window.onload = function () { window.focus(); window.print(); };</script>
 </body>
 </html>`;
