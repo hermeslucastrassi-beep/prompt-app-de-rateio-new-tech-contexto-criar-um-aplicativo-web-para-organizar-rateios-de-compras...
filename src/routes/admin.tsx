@@ -17,7 +17,7 @@ import {
   adminSetStatus,
 } from "@/lib/rateio.functions";
 import { allocateBatches, brl, perVial, prettyPhone, whatsappHref } from "@/lib/format";
-import { StoreAdminPanel } from "@/components/rateio/StoreAdminPanel";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -122,9 +122,6 @@ function AdminPage() {
             <TabsTrigger value="produtos" className="flex-1">
               Produtos
             </TabsTrigger>
-            <TabsTrigger value="loja" className="flex-1">
-              Loja
-            </TabsTrigger>
             <TabsTrigger value="config" className="flex-1">
               Configurações
             </TabsTrigger>
@@ -166,9 +163,6 @@ function AdminPage() {
             <ProductList products={payload.products} onUpdate={update} />
           </TabsContent>
 
-          <TabsContent value="loja" className="mt-6">
-            <StoreAdminPanel />
-          </TabsContent>
 
 
           <TabsContent value="config" className="mt-6 space-y-5">

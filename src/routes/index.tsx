@@ -1,22 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Lock, Store, Users } from "lucide-react";
+import { Lock, Users } from "lucide-react";
 
 import landingImage from "../assets/nova-era-landing.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Nova era peptídeos — Rateio e Loja a Pronta Entrega" },
+      { title: "Nova era peptídeos — Rateio em grupo" },
       {
         name: "description",
         content:
-          "Escolha participar de um rateio em grupo, comprar na loja a pronta entrega ou acessar a área do administrador do grupo Nova era peptídeos.",
+          "Escolha participar de um rateio em grupo ou acessar a área do administrador do grupo Nova era peptídeos.",
       },
-      { property: "og:title", content: "Nova era peptídeos — Rateio e Loja a Pronta Entrega" },
+      { property: "og:title", content: "Nova era peptídeos — Rateio em grupo" },
       {
         property: "og:description",
-        content: "Participe do rateio, compre a pronta entrega ou administre o grupo Nova era peptídeos.",
+        content: "Participe do rateio ou administre as listas do grupo Nova era peptídeos.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: HomePage,
@@ -30,16 +32,10 @@ const options = [
     description: "Entre nas listas de compra em grupo e reserve seus viais em lotes fechados.",
   },
   {
-    to: "/loja" as const,
-    icon: Store,
-    title: "Loja — a pronta entrega",
-    description: "Produtos disponíveis para envio imediato, sem esperar o fechamento do lote.",
-  },
-  {
     to: "/admin" as const,
     icon: Lock,
     title: "Administrador",
-    description: "Área restrita para gerenciar produtos, inscritos, estoque e pagamentos.",
+    description: "Área restrita para gerenciar produtos, inscritos e pagamentos.",
   },
 ];
 
