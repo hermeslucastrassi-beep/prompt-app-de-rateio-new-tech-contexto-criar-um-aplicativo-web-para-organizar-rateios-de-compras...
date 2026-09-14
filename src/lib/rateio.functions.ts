@@ -234,6 +234,7 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
       cardLink: string;
       whatsapp: string;
       paymentDays: number;
+      rateioTitle?: string;
       newPassword?: string;
     }) => data,
   )
@@ -245,9 +246,11 @@ export const adminSaveSettings = createServerFn({ method: "POST" })
       card_link: string;
       whatsapp: string;
       payment_days: number;
+      rateio_title: string;
       updated_at: string;
       admin_password_hash?: string;
     } = {
+      rateio_title: (data.rateioTitle ?? "").trim().slice(0, 120),
       pix_key: data.pixKey.trim().slice(0, 255),
       card_link: data.cardLink.trim().slice(0, 500),
       whatsapp: data.whatsapp.replace(/[^\d+]/g, "").slice(0, 20),
